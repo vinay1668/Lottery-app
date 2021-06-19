@@ -1,6 +1,7 @@
 import './App.css';
 import img from "./bggg.png"
 import imgeth from "./ee.png";
+import endImage from "./engimage.png";
 import { notification } from "antd";
 import { StaticJsonRpcProvider, Web3Provider } from "@ethersproject/providers";
 import { formatEther, parseEther } from "@ethersproject/units";
@@ -608,6 +609,11 @@ function renderElementWinner(){
   <img style={{ position:"absolute",top:"120px",left:"850px",height:"70%"}}src={img} alt="Iottery img" />
   {win ? <img style={{width:"13%",position:"absolute",top:"50px",left:"850px"}} src={imgeth} alt="ether guy" /> : null}
       
+  <a href="https://github.com/vinay1668" >
+
+  <img className="endLink" src={endImage} alt="github link" />
+  </a>
+
 
       
       

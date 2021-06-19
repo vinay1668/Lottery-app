@@ -139,6 +139,9 @@ position:absolute; top:90px; left:710px;
 .end{
   position: relative;top:10px;
 }
+.endLink{
+  position: absolute;top:670px;left:1450px;width:60px;height: 60px;
+}
 
 
 
@@ -278,6 +281,10 @@ position:absolute; top:90px; left:710px;
 .end{
   position: relative;font-size: 25px;top:3px;left:0px;margin-bottom: 100px;
 }
+.endLink{
+  visibility: hidden;
+}
+
 
 
 
