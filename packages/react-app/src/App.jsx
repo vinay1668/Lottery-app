@@ -1,3 +1,7 @@
+import './App.css';
+import img from "./bggg.png"
+import imgeth from "./ee.png";
+import { notification } from "antd";
 import { StaticJsonRpcProvider, Web3Provider } from "@ethersproject/providers";
 import { formatEther, parseEther } from "@ethersproject/units";
 import WalletConnectProvider from "@walletconnect/web3-provider";
@@ -22,8 +26,12 @@ import {
   useOnBlock,
   useUserProvider,
 } from "./hooks";
+
 // import Hints from "./Hints";
 import { ExampleUI, Hints, Subgraph } from "./views";
+import DisplayVariable from './components/Contract/DisplayVariable';
+import { ConsoleSqlOutlined } from '@ant-design/icons';
+
 /*
     Welcome to 🏗 scaffold-eth !
 
@@ -65,7 +73,7 @@ const localProviderUrl = targetNetwork.rpcUrl;
 // as you deploy to other networks you can set REACT_APP_PROVIDER=https://dai.poa.network in packages/react-app/.env
 const localProviderUrlFromEnv = process.env.REACT_APP_PROVIDER ? process.env.REACT_APP_PROVIDER : localProviderUrl;
 if (DEBUG) console.log("🏠 Connecting to provider:", localProviderUrlFromEnv);
-const localProvider = new StaticJsonRpcProvider(localProviderUrlFromEnv);
+const localProvider = new StaticJsonRpcProvider("https://rinkeby.infura.io/v3/" + INFURA_ID);
 
 // 🔭 block explorer URL
 const blockExplorer = targetNetwork.blockExplorer;
@@ -93,7 +101,12 @@ const logoutOfWeb3Modal = async () => {
   }, 1);
 };
 
+
+
 function App(props) {
+
+  
+
   const mainnetProvider = scaffoldEthProvider && scaffoldEthProvider._network ? scaffoldEthProvider : mainnetInfura;
 
   const [injectedProvider, setInjectedProvider] = useState();
@@ -105,6 +118,7 @@ function App(props) {
   // Use your injected provider from 🦊 Metamask or if you don't have it then instantly generate a 🔥 burner wallet.
   const userProvider = useUserProvider(injectedProvider, localProvider);
   const address = useUserAddress(userProvider);
+  //console.log(address);
 
   // You can warn the user if you would like them to be on a specific network
   const localChainId = localProvider && localProvider._network && localProvider._network.chainId;
@@ -151,6 +165,7 @@ function App(props) {
   // 📟 Listen for broadcast events
   const setPurposeEvents = useEventListener(readContracts, "YourContract", "SetPurpose", localProvider, 1);
 
+
   /*
   const addressFromENS = useResolveName(mainnetProvider, "austingriffith.eth");
   console.log("🏷 Resolved austingriffith.eth as:",addressFromENS)
@@ -171,17 +186,22 @@ function App(props) {
       writeContracts &&
       mainnetDAIContract
     ) {
-      console.log("_____________________________________ 🏗 scaffold-eth _____________________________________");
-      console.log("🌎 mainnetProvider", mainnetProvider);
-      console.log("🏠 localChainId", localChainId);
-      console.log("👩‍💼 selected address:", address);
-      console.log("🕵🏻‍♂️ selectedChainId:", selectedChainId);
-      console.log("💵 yourLocalBalance", yourLocalBalance ? formatEther(yourLocalBalance) : "...");
-      console.log("💵 yourMainnetBalance", yourMainnetBalance ? formatEther(yourMainnetBalance) : "...");
-      console.log("📝 readContracts", readContracts);
-      console.log("🌍 DAI contract on mainnet:", mainnetDAIContract);
-      console.log("🔐 writeContracts", writeContracts);
+      // console.log("_____________________________________ 🏗 scaffold-eth _____________________________________");
+      // console.log("🌎 mainnetProvider", mainnetProvider);
+      // console.log("🏠 localChainId", localChainId);
+      // console.log("👩‍💼 selected address:", address);
+      // console.log("🕵🏻‍♂️ selectedChainId:", selectedChainId);
+      // console.log("💵 yourLocalBalance", yourLocalBalance ? formatEther(yourLocalBalance) : "...");
+      // console.log("💵 yourMainnetBalance", yourMainnetBalance ? formatEther(yourMainnetBalance) : "...");
+      // console.log("📝 readContracts", readContracts);
+      // console.log("🌍 DAI contract on mainnet:", mainnetDAIContract);
+      // console.log("🔐 writeContracts", writeContracts);
     }
+
+    
+
+    
+
   }, [
     mainnetProvider,
     address,
@@ -192,8 +212,17 @@ function App(props) {
     writeContracts,
     mainnetDAIContract,
   ]);
+  
+  // dummy();
+  // async function dummy(){
+  // let res = await readContracts.YourContract.purpose();
+  // console.log("The purpose is: ", res)
+  // }
+
+
 
   let networkDisplay = "";
+  
   if (localChainId && selectedChainId && localChainId !== selectedChainId) {
     const networkSelected = NETWORK(selectedChainId);
     const networkLocal = NETWORK(localChainId);
@@ -283,14 +312,379 @@ function App(props) {
         </Button>
       </div>
     );
+    
+
   }
 
+
+
+
+
+
+const[amount,setAmount]= useState();
+const[userRound,setUserRound] = useState();
+const[input,setInput] = useState(false);
+const[win,setWin] = useState(false);
+const[timePassed, setTimePassed] = useState(false);
+
+
+
+
+
+  var roundNumber;
+  var roundPlayers;
+  var roundBalance;
+  var newWinner;
+
+  // Event listeners 
+
+
+  const roundUpdates = useEventListener(
+    readContracts,
+    "YourContract",
+    "RoundNumber",
+    props.localProvider,
+    1
+  ); 
+  try{
+  if(roundUpdates[0].round != undefined){
+    roundNumber = roundUpdates[0].round.toNumber();
+
+
+    
+
+  }
+}
+catch(e){}
+
+
+
+
+const roundDetailsUpdates = useEventListener(readContracts,"YourContract","RoundDetails",props.localProvider,1);
+
+
+try{
+  if(roundDetailsUpdates[0][0] != undefined){
+   roundPlayers = roundDetailsUpdates[0][0].toNumber();
+   roundBalance = parseInt(formatEther(roundDetailsUpdates[0][1])).toFixed(10);
+
+   
+  }
+}
+catch(e){}
+
+
+const winners = useEventListener(readContracts,"YourContract","winner",props.localProvider,1);
+
+try{
+  if(winners[0][0] != undefined){
+    newWinner = winners[0][0].toNumber();
+    
+    
+  }
+}
+catch(e){}
+
+
+// calling functions of solidy
+
+
+  const dummy = useContractReader(readContracts, "YourContract", "round"); 
+
+  try{
+    if(dummy.toNumber() != undefined){
+      roundNumber = dummy.toNumber();
+    }  
+  }
+
+  catch(e){
+     
+  }
+  
+  const newDummy = useContractReader(readContracts,"YourContract","roundDetails");
+  try{ 
+    if(newDummy[1].toNumber() != undefined){
+      roundBalance = parseInt(formatEther(newDummy[0])).toFixed(10);
+       roundPlayers = newDummy[1].toNumber();
+    }
+  }
+  catch(e){}
+
+ 
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+/// usecontractreader to read and write contract should be outside the return statemen
+// writecontract and readcontracs shoudld be used inside the return statement  
+
+
+async function transact(num)  {
+  if(amount== null){
+    setTimePassed(true);
+    
+  }
+  else{
+  await tx(writeContracts.YourContract.buyTicket(num,{
+    value: amount.toString()//parseEther(amount.toString())
+  }));    
+   
+  
+  
+  
+}
+}
+
+  
+    
+
+
+
+const onChangeHandler=event =>{
+  setAmount(event.target.value);
+  
+
+}
+setTimeout(function(){
+    setWin(false);
+},15000);
+
+
+function renderElement(){
+  if(roundPlayers == 10){
+    return ( <h1 className="playersnumber10">{roundPlayers}</h1> ) 
+  }
+  else{
+    return(<h1 className="playersnumber">{roundPlayers}</h1> );
+  }
+}
+function renderElementWinner(){
+  if(newWinner == 10){
+    return( <h1 className="winnernumber10" >{newWinner}</h1> );
+  }
+  else{
+    return( <h1 className="winnernumber" >{newWinner}</h1> );
+  }
+  
+}
+   
   return (
     <div className="App">
-      {/* ✏️ Edit the header and change the title to your project name */}
-      <Header />
-      {networkDisplay}
-      <BrowserRouter>
+
+
+    <h2 className="roundno choose" >Round No :</h2>
+    <div  className="card roundnocard">{roundNumber}</div>
+
+
+    <h2 className="choose players" >Players:</h2>
+    <div  className="numberCircle playerscircle">
+       </div>
+
+
+       <view>
+         {renderElement()}
+       </view>
+      
+       
+       <h2 className="choose winner" >Winner:</h2>
+    <div  className="numberCircle winnercircle">
+       </div>
+
+       <view>
+         {renderElementWinner()}
+       </view>
+      
+    
+    <h1 className ="sub">(for previous round)</h1>
+
+
+     <h2 className="choose amount">Amount :</h2>
+     <input onChange={onChangeHandler} value={amount} type="text" class="form-control amountcard" id="" placeholder="Amount in ETH"></input>
+     
+
+     <h2 className="choose ticket">Choose Ticket :</h2>
+     <div className ="div1">
+
+                    <button onClick ={()=>{transact(1)}}
+                     type="button" className="btn btn-primary button1">
+                       <h2 className="numberInWhite">1</h2>
+                     </button>
+
+                    <button onClick ={()=>transact(2)}
+                     type="button" class="btn btn-light btn-lg button1">
+                       <h2 className = "numberInBlack">2</h2>
+                     </button>
+
+                    <button onClick ={()=>transact(3)}
+                    type="button" class="btn btn-secondary btn-lg button1">
+                      <h2 className="numberInWhite">3</h2>
+                    </button>
+
+                    <button onClick ={()=>transact(4)}   
+                    type="button" class="btn btn-light btn-lg button1">
+                       <h2 className = "numberInBlack">4</h2>
+                    </button>
+
+                    <button onClick ={()=>transact(5)}
+                    type="button" class="btn btn-primary btn-lg button1">
+                      <h2 className="numberInWhite">5</h2>
+                    </button>
+
+                    </div>
+                    
+
+                    <div className="div2">
+
+                    <button onClick ={()=>transact(6)}
+                    type ="button" class="btn btn-primary btn-lg button1">
+                      <h2 className="numberInWhite">6</h2>
+                    </button>
+
+                    <button  onClick ={()=>transact(7)}
+                    type="button" className="btn btn-light btn-lg button1">
+                       <h2 className = "numberInBlack">7</h2>
+                    </button>
+
+                    <button  onClick ={()=>transact(8)}
+                    type="button" class="btn btn-secondary btn-lg button1">
+                      <h2 className="numberInWhite">8</h2>
+                    </button>
+
+                    <button  onClick ={()=>transact(9)}
+                     type="button" class="btn btn-light btn-lg button1">
+                        <h2 className = "numberInBlack">9</h2>
+                     </button>
+
+                    <button  onClick ={()=>transact(10)}
+                     type="button" class="btn btn-primary btn-lg button1">
+                     <h2 className="numberInWhite">10</h2>
+                     </button>
+                    </div>
+      
+
+      <h2 className="choose balance">Round Balance:</h2> 
+      <div  className="card balancecard"> {roundBalance}</div>
+      <h2 className="choose eth" >ETH</h2>
+
+
+
+      <input onChange={(e)=>{
+                    setUserRound(e.target.value);
+                  }}
+                   type="text" className="form-control roundInput" placeholder="Round number"></input>
+                  <button onClick={async()=>{
+                    if(userRound == null){
+                      setInput(true);
+                    }
+                    else{
+                   var dum = await tx(writeContracts.YourContract.claimPrize(userRound));
+                   if(dum!= undefined){
+                     setWin(true);
+                    }
+                      }
+                  }}
+                   type="button" className="choose btn btn-warning claim">
+                     <h2 className="choose end">Claim Prize</h2>
+                 
+                     </button>
+
+
+
+    
+
+  <img style={{ position:"absolute",top:"120px",left:"850px",height:"70%"}}src={img} alt="Iottery img" />
+  {win ? <img style={{width:"13%",position:"absolute",top:"50px",left:"850px"}} src={imgeth} alt="ether guy" /> : null}
+      
+
+      
+      
+    
+      
+       
+        { timePassed ?
+        
+         (notification.error({
+          message:"Please input the Amount",
+          description:null
+        }),setTimePassed(false)) :null} 
+  
+        {input ? (notification.error({
+          message:"Please input the RoundNumber",
+          description:null
+        }),setInput(false)):null}
+            
+      
+     
+      
+         
+
+            
+            
+     
+     
+           
+            
+            
+            
+
+
+
+                    
+                    
+                  
+         
+                                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      {/* ✏️ Edit the header and change the title to your project name */
+
+      }
+      <Header/>
+      {/* {networkDisplay} */}
+      
+    
+      
+      {/* <BrowserRouter>
         <Menu style={{ textAlign: "center" }} selectedKeys={[route]} mode="horizontal">
           <Menu.Item key="/">
             <Link
@@ -345,20 +739,32 @@ function App(props) {
         </Menu>
 
         <Switch>
-          <Route exact path="/">
+          <Route exact path="/"> */}
             {/*
                 🎛 this scaffolding is full of commonly used components
                 this <Contract/> component will automatically parse your ABI
                 and give you a form to interact with it locally
             */}
+                      {/* <div style={{padding:8}}>
+            <Button type={"default"} onClick={()=>{
+              tx( writeContracts.YourContract.setPurpose("bow bow") )
+            }}>📡  Set purpose</Button>
+          </div>
+          <div style={{padding:8}}>
+            <Button type={"default"} onClick={async ()=>{
+              dum = await readContracts.YourContract.purpose()
+              console.log("The changed purpose is: ", dum);
+            }}>📡  Get purpose</Button>
+          </div>
+         */}
 
-            <Contract
-              name="YourContract"
+            {/* <Contract
+              name="Badge"
               signer={userProvider.getSigner()}
               provider={localProvider}
               address={address}
               blockExplorer={blockExplorer}
-            />
+            /> */}
 
             {/* uncomment for a second contract:
             <Contract
@@ -380,15 +786,15 @@ function App(props) {
               blockExplorer={blockExplorer}
             />
             */}
-          </Route>
+          {/* </Route>
           <Route path="/hints">
             <Hints
               address={address}
               yourLocalBalance={yourLocalBalance}
               mainnetProvider={mainnetProvider}
               price={price}
-            />
-          </Route>
+            /> */}
+          {/* </Route>
           <Route path="/exampleui">
             <ExampleUI
               address={address}
@@ -423,28 +829,36 @@ function App(props) {
             />
           </Route>
         </Switch>
-      </BrowserRouter>
+      </BrowserRouter> */}
 
-      <ThemeSwitch />
+      {/* <ThemeSwitch /> */}
 
       {/* 👨‍💼 Your account is in the top right with a wallet at connect options */}
-      <div style={{ position: "fixed", textAlign: "right", right: 0, top: 0, padding: 10 }}>
+      <div className="address" >
         <Account
           address={address}
           localProvider={localProvider}
           userProvider={userProvider}
           mainnetProvider={mainnetProvider}
-          price={price}
+          //price={price}
           web3Modal={web3Modal}
           loadWeb3Modal={loadWeb3Modal}
           logoutOfWeb3Modal={logoutOfWeb3Modal}
           blockExplorer={blockExplorer}
         />
-        {faucetHint}
+        {/* {faucetHint} */}
       </div>
 
+     {/* <div style={{ position: "fixed", textAlign: "left", left: 0, bottom: 20, padding: 10 }}>
+        <Row align="middle" gutter={[4, 4]}>
+          <Col span={8}>
+            <Ramp price={price} address={address} networks={NETWORKS} />
+          </Col>
+          </Row>
+          </div>  */}
+
       {/* 🗺 Extra UI like gas price, eth price, faucet, and support: */}
-      <div style={{ position: "fixed", textAlign: "left", left: 0, bottom: 20, padding: 10 }}>
+       {/* <div style={{ position: "fixed", textAlign: "left", left: 0, bottom: 20, padding: 10 }}>
         <Row align="middle" gutter={[4, 4]}>
           <Col span={8}>
             <Ramp price={price} address={address} networks={NETWORKS} />
@@ -470,10 +884,10 @@ function App(props) {
         </Row>
 
         <Row align="middle" gutter={[4, 4]}>
-          <Col span={24}>
-            {
-              /*  if the local provider has a signer, let's show the faucet:  */
-              faucetAvailable ? (
+          <Col span={24}> */}
+            
+             {/* if the local provider has a signer, let's show the faucet:  */}
+              {/* { faucetAvailable ? (
                 <Faucet localProvider={localProvider} price={price} ensProvider={mainnetProvider} />
               ) : (
                 ""
@@ -481,8 +895,8 @@ function App(props) {
             }
           </Col>
         </Row>
-      </div>
-    </div>
+      </div>  */}
+    </div> 
   );
 }
 
@@ -503,5 +917,7 @@ window.ethereum &&
       }, 1);
   });
 /* eslint-enable */
+
+// export default App;
 
 export default App;

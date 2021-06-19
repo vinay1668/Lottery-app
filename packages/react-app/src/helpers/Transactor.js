@@ -73,10 +73,15 @@ export default function Transactor(provider, gasPrice, etherscan) {
         return result;
       } catch (e) {
         console.log(e);
-        console.log("Transaction Error:", e.message);
+        var dummy=  e.message.substring(e.message.indexOf(":")+1);
+        var dum = dummy.substring(dummy.indexOf(":")+1);
+        var de = dum.substring(dum.indexOf(":")+1);
+        var s = de.split('"')[0];
+        console.log(de.split('"')[0]);
+        
         notification.error({
           message: "Transaction Error",
-          description: e.message,
+          description: s,
         });
       }
     };

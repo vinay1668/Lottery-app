@@ -1,3 +1,285 @@
 .App {
   text-align: center;
 }
+.card:hover {
+  transform: scale(1.01); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+p{
+  font-family: 'Noto Sans JP', sans-serif;
+font-size: 2rem;
+color: #82817d;
+font-weight: 500;
+}
+h2{
+  font-family: 'Open Sans', sans-serif;
+  font-size:20px;
+  font-weight: bold;
+}
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+  background-image: url("./bg.jpg");
+  background-repeat: no-repeat, repeat;
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover;
+  
+}
+.choose{
+color: #2b2e4a;
+font-size: 30px;
+font-family: 'Libre Baskerville', serif;
+font-family: 'Nunito', sans-serif;
+}
+.numberCircle {
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+  text-align: center;
+  font-size: 32px;
+  border: 5px solid #F9F9F9;
+  background-color: #F4F4F4;
+}
+
+.card{
+  width: 250px;
+  height: 50px;
+  border-radius: 8px;
+  text-align: center;
+  background-color: #F4F4F4;
+  font-size: 30px;
+  font-family: 'Noto Sans JP', sans-serif;
+  color: #252525;
+}
+.header{
+  cursor:  pointer;
+  opacity: 0.5;
+}
+.address{
+  position: fixed; text-align: right; right: 0; top: 0; 
+  padding: 10px;
+}
+.roundno{
+  position: absolute;
+  top:110px;
+  left:30px;
+}
+.roundnocard{
+  position: absolute; top:110px; left:240px;
+  
+}
+
+.players{
+  position:absolute;top:120px;left:550px;
+
+}
+.playerscircle{
+position:absolute; top:90px; left:710px;
+}
+.playersnumber{
+   position:absolute;left:740px;top:105px;
+}
+.playersnumber10{
+  position:absolute;left:728px ;top:105px;
+}
+.winner{
+  position:absolute;top:230px;left:550px;
+}
+.winnercircle{
+  position:absolute;top:210px;left:710px;
+}
+.sub{
+  position:absolute;left:540px;top:270px;font-size:15px;opacity:0.8;
+}
+.winnernumber{
+  position:absolute;left:740px;top:224px;
+}
+.winnernumber10{
+  position:absolute;left:728px;top:224px;
+}
+.amount{
+  position:absolute;top:230px;left:30px;
+}
+.amountcard{
+  width:250px;height:50px;position:absolute;top:230px;left:240px;border-radius:8px;
+}
+.ticket{
+  position:absolute;top:340px;left:30px;
+}
+.div1{
+  position:absolute;top:380px;left:20px;display:flex;justify-content:space-between; margin:10px;
+}
+.div2{
+   position:absolute;top:480px;left:20px;display:flex;justify-content:space-between; margin:10px;
+}
+.button1{
+  width:80px;height:45px;margin:30px;
+}
+.numberInWhite{
+   position:relative;top:3px;left:0px;color:white;
+}
+.numberInBlack{
+  position:relative;top:3px;left:0px;color:black;
+}
+.balance{
+  position:absolute;top:650px;left:30px;
+}
+.balancecard{
+  position:absolute;top:650px;left:300px;
+}
+.eth{
+  position:absolute;top:660px;left:560px;
+}
+.roundInput{
+  width:150px;height:60px;position:absolute;top:650px;left:800px;border-radius:8px;
+}
+.claim{
+  position:absolute;top:650px;left:1000px;border-radius:8px;
+}
+.end{
+  position: relative;top:10px;
+}
+
+
+
+
+
+
+@media screen and (max-width: 800px) {
+
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
+    background-image: url("./bg.jpg");
+    background-repeat: no-repeat, repeat;
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover;
+    background-attachment: fixed;
+  
+    padding-bottom: 50px;
+  }
+
+
+  .header{
+    /* visibility: hidden; */
+    position: absolute;
+    top:40px;
+    left:0px;
+    cursor:  pointer;
+    opacity: 0.3;
+    font-size: 2px;
+  
+  }
+  .address{
+    /* visibility: hidden; */
+  
+    position: absolute;
+    text-align: right; right: 0; top: 0; padding: 10;
+  
+  }
+  .roundno{
+    position: absolute;
+    top: 150px;
+    left: 5px;
+    font-size: 25px;
+   }
+   .card{
+    width: 180px;
+    height: 40px;
+    border-radius: 8px;
+    text-align: center;
+    background-color: #F4F4F4;
+    font-size: 23px;
+    font-family: 'Noto Sans JP', sans-serif;
+    color: #252525;
+  }
+  .numberCircle {
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    text-align: center;
+    font-size: 32px;
+    border: 5px solid #F9F9F9;
+    background-color: #F4F4F4;
+  }
+   .roundnocard{
+    position: absolute; top:145px; left:150px;   
+  }
+  .players{
+    position:absolute;top:230px;left:5px;font-size: 25px;
+  
+  }
+  .playerscircle{
+  position:absolute; top:215px; left:110px;
+  }
+  .playersnumber{
+     position:absolute;left:132px;top:228px;
+  }
+  .playersnumber10{
+    position:absolute;left:125px ;top:226px;
+  }
+  
+  .winner{
+    position:absolute;top:229px;left:175px; font-size: 25px;
+  }
+  .sub{
+    position:absolute;top:265px;left:175px;font-size: 10px;opacity: 0.8;
+  }
+  .winnercircle{
+    position:absolute; top:215px; left:275px;
+  }
+  .winnernumber{
+    position:absolute;left:297px;top:226px;
+  }
+  .winnernumber10{
+    position:absolute;left:288px;top:226px;
+  }
+  .amount{
+    position:absolute;top:320px;left:5px;font-size: 25px;
+  }
+  .amountcard{
+    width:180px;height:40px;position:absolute;top:315px;left:150px;border-radius:8px;
+  }
+  .ticket{
+    position:absolute;top:390px;left:5px;font-size: 25px;
+  }
+  .div1{
+    position:absolute;top:430px;left:0px;display:flex;justify-content:space-between; margin:10px;text-align: center;
+  }
+  .div2{
+    position:absolute;top:500px;left:0px;display:flex;justify-content:space-between; margin:10px;text-align: center;
+
+  }
+  .button1{
+    width:45px;height:40px;margin:10px;text-align: center;
+  }
+  .numberInWhite{
+    position:relative;top:0px;left:0px;color:white;
+ }
+ .numberInBlack{
+   position:relative;top:0px;left:0px;color:black;right: 10px;
+ }
+ .balance{
+  position:absolute;top:610px;left:5px;font-size: 25px;
+}
+.balancecard{
+  position:absolute;top:650px;left:90px;
+}
+.eth{
+   position:absolute;top:655px;left:280px;font-size: 25px;
+}
+.roundInput{
+  width:150px;height:50px;position:absolute;top:740px;left:8px;border-radius:8px;
+}
+.claim{
+  position:absolute;top:740px;left:165px;border-radius:8px;width: 170px;height: 50px;
+}
+.end{
+  position: relative;font-size: 25px;top:3px;left:0px;margin-bottom: 100px;
+}
+
+
+
+
+}
