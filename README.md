@@ -1,3 +1,8 @@
+
+[View the site here](https://crypto-lottery.surge.sh)
+
+
+[crypto-lottery.surge.sh]
 # 🏗 scaffold-eth
 
 > is everything you need to get started building decentralized applications on Ethereum! 🚀 
