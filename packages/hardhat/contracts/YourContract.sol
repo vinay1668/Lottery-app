@@ -95,7 +95,7 @@ contract YourContract is VRFConsumerBase {
        
        uint randomNumber = getRandomByRound[_round].randomNumber;
        require(getRandomByRound[_round].available , "Lottery not completed yet");
-       require(getRoundDetails[_round].roundPlayers == 2 , "Lottery not completed yet");
+       require(getRoundDetails[_round].roundPlayers == 10 , "Lottery not completed yet");
        require (getDetails[_round][randomNumber].isIn[msg.sender],"sorry you lost the bet!" );
        
        
@@ -119,7 +119,7 @@ contract YourContract is VRFConsumerBase {
 
     
     function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
-        getRandomByRound[round].randomNumber = randomness.mod(2).add(1);
+        getRandomByRound[round].randomNumber = randomness.mod(10).add(1);
         emit winner(getRandomByRound[round].randomNumber);
         getRandomByRound[round].available = true;
         

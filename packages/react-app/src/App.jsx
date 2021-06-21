@@ -405,7 +405,7 @@ catch(e){}
   const newDummy = useContractReader(readContracts,"YourContract","roundDetails");
   try{ 
     if(newDummy[1].toNumber() != undefined){
-      roundBalance = parseInt(formatEther(newDummy[0])).toFixed(10);
+      roundBalance = parseFloat(formatEther(newDummy[0])).toFixed(10);
        roundPlayers = newDummy[1].toNumber();
     }
   }
@@ -440,7 +440,7 @@ async function transact(num)  {
   }
   else{
   await tx(writeContracts.YourContract.buyTicket(num,{
-    value: amount.toString()//parseEther(amount.toString())
+    value: parseEther(amount.toString())
   }));    
    
   
@@ -472,6 +472,8 @@ function renderElement(){
     return(<h1 className="playersnumber">{roundPlayers}</h1> );
   }
 }
+
+
 function renderElementWinner(){
   if(newWinner == 10){
     return( <h1 className="winnernumber10" >{newWinner}</h1> );
@@ -606,8 +608,8 @@ function renderElementWinner(){
 
     
 
-  <img style={{ position:"absolute",top:"120px",left:"850px",height:"70%"}}src={img} alt="Iottery img" />
-  {win ? <img style={{width:"13%",position:"absolute",top:"50px",left:"850px"}} src={imgeth} alt="ether guy" /> : null}
+  <img className="lotteryimg" src={img} alt="Iottery img" />
+  {win ? <img className="etherguyimg"  src={imgeth} alt="ether guy" /> : null}
       
   <a href="https://github.com/vinay1668" >
 

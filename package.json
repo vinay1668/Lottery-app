@@ -69,6 +69,7 @@
     "google-map-react": "^2.1.9",
     "google-maps-react": "^2.0.6",
     "react-google-maps": "^9.4.5",
-    "react-map-gl": "^6.1.15"
+    "react-map-gl": "^6.1.15",
+    "surge": "^0.23.0"
   }
 }
